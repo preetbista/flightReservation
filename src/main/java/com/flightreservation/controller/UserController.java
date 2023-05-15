@@ -21,17 +21,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll(){
+    public List<User> getAll() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/id/{id}")
-    public User findById(@PathVariable Long id){
+    @GetMapping("/find/{id}")
+    public User findById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     @GetMapping("/username/{username}")
-    public User findByUsername(@PathVariable String username){
+    public User findByUsername(@PathVariable String username) {
         return userService.findByUsername(username);
     }
 
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<User> updateUser (@RequestBody UserUpdateDto user){
+    public ResponseEntity<User> updateUser(@RequestBody UserUpdateDto user) {
         User updatedUser = userService.updateUser(user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
