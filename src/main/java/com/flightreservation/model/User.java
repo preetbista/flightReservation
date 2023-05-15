@@ -38,4 +38,7 @@ public class User extends TimeStamp {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<BookTicket> bookTickets;
 }
