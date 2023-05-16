@@ -6,11 +6,9 @@ import com.flightreservation.status.SeatStatus;
 import com.flightreservation.timestamp.TimeStamp;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -49,6 +47,5 @@ public class BookTicket extends TimeStamp {
     private Cabin cabin;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bookTickets_id")
     private User user;
 }

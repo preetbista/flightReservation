@@ -39,6 +39,7 @@ public class User extends TimeStamp {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany( cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
     private List<BookTicket> bookTickets;
 }
