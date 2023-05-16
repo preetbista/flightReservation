@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CabinRepository extends JpaRepository<Cabin, Long> {
     boolean existsBySeatName(String seatName);
+
+    Cabin findBySeatName(String seatName);
 }

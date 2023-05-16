@@ -1,14 +1,13 @@
 package com.flightreservation.controller;
 
-import com.flightreservation.model.BookTicket;
+import com.flightreservation.resource.requestdto.BookTicketRequestDTO;
+import com.flightreservation.resource.responsedto.BookTicketResponseDTO;
 import com.flightreservation.service.BookTicketService;
-import com.flightreservation.status.SeatStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/book-ticket")
@@ -20,9 +19,13 @@ public class BookTicketController {
     }
 
     @PostMapping
-    public ResponseEntity<BookTicket> addBookTicket(@RequestBody BookTicket bookTicket) {
-        bookTicket.setBookStatus(SeatStatus.BOOKED);
-        BookTicket createdBookTicket = bookTicketService.addBookTicket(bookTicket);
+    public ResponseEntity<BookTicketResponseDTO> addBookTicket(@RequestBody BookTicketRequestDTO bookTicketRequestDTO) {
+        BookTicketResponseDTO createdBookTicket = bookTicketService.addBookTicket(bookTicketRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdBookTicket);
+    }
+
+    @GetMapping
+    public List<BookTicketResponseDTO> getAll(){
+        return bookTicketService.getAllUsers();
     }
 }

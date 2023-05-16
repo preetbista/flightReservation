@@ -1,7 +1,8 @@
 package com.flightreservation.controller;
 
-import com.flightreservation.dto.UserUpdateDto;
+import com.flightreservation.resource.UserUpdateDto;
 import com.flightreservation.model.User;
+import com.flightreservation.resource.responsedto.UserResponseDTO;
 import com.flightreservation.service.UserService;
 import com.flightreservation.status.UserStatus;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
+    public List<UserResponseDTO> getAll() {
         return userService.getAllUsers();
     }
 

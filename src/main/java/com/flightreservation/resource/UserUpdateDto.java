@@ -1,4 +1,4 @@
-package com.flightreservation.dto;
+package com.flightreservation.resource;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

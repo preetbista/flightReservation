@@ -1,9 +1,11 @@
 package com.flightreservation.service.impl;
 
-import com.flightreservation.dto.UserUpdateDto;
+import com.flightreservation.resource.UserUpdateDto;
 import com.flightreservation.exception.UserNotFoundException;
 import com.flightreservation.model.User;
 import com.flightreservation.repository.UserRepository;
+import com.flightreservation.resource.requestdto.UserRequestDTO;
+import com.flightreservation.resource.responsedto.UserResponseDTO;
 import com.flightreservation.service.UserService;
 import com.flightreservation.status.UserStatus;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,8 +24,11 @@ public class UserServiceImpl implements UserService {
     /*private final BCryptPasswordEncoder bCryptPasswordEncoder;*/
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponseDTO::of)
+                .collect(Collectors.toList());
     }
 
     @Override

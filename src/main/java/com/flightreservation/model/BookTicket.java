@@ -2,6 +2,7 @@ package com.flightreservation.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.flightreservation.status.BookStatus;
 import com.flightreservation.status.SeatStatus;
 import com.flightreservation.timestamp.TimeStamp;
 import lombok.*;
@@ -40,7 +41,7 @@ public class BookTicket extends TimeStamp {
     private String arrivalTime;
 
     @Enumerated(EnumType.STRING)
-    private SeatStatus bookStatus;
+    private BookStatus bookStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cabin_id")

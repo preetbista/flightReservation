@@ -1,12 +1,13 @@
 package com.flightreservation.service;
 
-import com.flightreservation.dto.UserUpdateDto;
+import com.flightreservation.resource.UserUpdateDto;
 import com.flightreservation.model.User;
+import com.flightreservation.resource.responsedto.UserResponseDTO;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> getAllUsers();
+    List<UserResponseDTO> getAllUsers();
 
     User findById(Long id);
 

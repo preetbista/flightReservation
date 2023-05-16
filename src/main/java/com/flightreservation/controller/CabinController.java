@@ -2,18 +2,17 @@ package com.flightreservation.controller;
 
 import com.flightreservation.exception.CabinAlreadyExistException;
 import com.flightreservation.model.Cabin;
+import com.flightreservation.resource.requestdto.CabinRequestDTO;
+import com.flightreservation.resource.responsedto.CabinResponseDTO;
 import com.flightreservation.service.CabinService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/cabin")
+@RequestMapping("/cabins")
 public class CabinController {
 
     private final CabinService cabinService;
@@ -23,13 +22,18 @@ public class CabinController {
     }
 
     @PostMapping
-    public ResponseEntity<List<Cabin>> addSeat(@RequestBody Cabin cabin) {
+    public ResponseEntity<List<CabinResponseDTO>> addSeat(@RequestBody CabinRequestDTO cabinRequestDTO) {
         try {
-            List<Cabin> addedCabins = cabinService.addSeat(cabin);
+            List<CabinResponseDTO> addedCabins = cabinService.addSeat(cabinRequestDTO);
             return new ResponseEntity<>(addedCabins, HttpStatus.CREATED);
         } catch (CabinAlreadyExistException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    public List<CabinResponseDTO> getAll(){
+        return cabinService.getAllCabin();
     }
 
 }
