@@ -23,7 +23,7 @@ public class User extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_name",unique = true)
+    @Column(name = "user_name", unique = true)
     private String userName;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -39,7 +39,7 @@ public class User extends TimeStamp {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Role> roles;
 
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private List<BookTicket> bookTickets;
 }

@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,13 +28,14 @@ public class BookTicketServiceImpl implements BookTicketService {
     private final CabinRepository cabinRepository;
 
     private UserService userService;
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
     @Override
-    public BookTicketResponseDTO addBookTicket(BookTicketRequestDTO bookTicketRequestDTO){
+    public BookTicketResponseDTO addBookTicket(BookTicketRequestDTO bookTicketRequestDTO) {
         String seatName = bookTicketRequestDTO.getCabin().getSeatName();
         Cabin cabin = cabinRepository.findBySeatName(seatName);
         if (cabin != null && cabin.getAvailability().equals(SeatStatus.AVAILABLE)) {
@@ -53,7 +53,7 @@ public class BookTicketServiceImpl implements BookTicketService {
             User user = userService.findById(bookTicketRequestDTO.getUser().getId());
             bookTicket.setUser(user);
 
-            bookTicket =  bookTicketRepository.save(bookTicket);
+            bookTicket = bookTicketRepository.save(bookTicket);
 
             return BookTicketResponseDTO.builder()
                     .arrivalAirport(bookTicket.getArrivalAirport())
@@ -69,9 +69,16 @@ public class BookTicketServiceImpl implements BookTicketService {
     }
 
     @Override
-    public List<BookTicketResponseDTO> getAllUsers(){
-       return bookTicketRepository.findAll().stream()
-               .map(BookTicketResponseDTO::of)
-               .collect(Collectors.toList());
+    public List<BookTicketResponseDTO> getAllUsers() {
+        return bookTicketRepository.findAll().stream()
+                .map(BookTicketResponseDTO::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BookTicketResponseDTO> getInfoForRestTemp() {
+        return bookTicketRepository.findAll().stream()
+                .map(BookTicketResponseDTO::forRest)
+                .collect(Collectors.toList());
     }
 }

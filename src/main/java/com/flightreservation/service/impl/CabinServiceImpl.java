@@ -8,14 +8,17 @@ import com.flightreservation.resource.responsedto.CabinResponseDTO;
 import com.flightreservation.service.CabinService;
 import com.flightreservation.status.SeatStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CabinServiceImpl implements CabinService {
 
     private final CabinRepository cabinRepository;
@@ -41,14 +44,29 @@ public class CabinServiceImpl implements CabinService {
 
             cabinResponseDTOList.add(cabinResponseDTO);
         }
-        return  cabinResponseDTOList;
+        return cabinResponseDTOList;
     }
 
     @Override
-    public List<CabinResponseDTO> getAllCabin(){
+    public List<CabinResponseDTO> getAllCabin() {
         return cabinRepository.findAll()
                 .stream()
                 .map(CabinResponseDTO::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getCabinSeatName() {
+        log.info("inside getCabinSeatName");
+        List<CabinResponseDTO> cabinResponseDTO = cabinRepository.findAll()
+                .stream()
+                .map(CabinResponseDTO::forRest)
+                .collect(Collectors.toList());
+        List<String> cabinList = new ArrayList<>();
+        for (CabinResponseDTO responseDTO : cabinResponseDTO) {
+            cabinList.add(responseDTO.getSeatName());
+        }
+        log.info("List of cabin returning: "+cabinList);
+        return cabinList;
     }
 }

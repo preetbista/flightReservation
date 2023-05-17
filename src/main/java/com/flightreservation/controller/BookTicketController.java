@@ -25,7 +25,13 @@ public class BookTicketController {
     }
 
     @GetMapping
-    public List<BookTicketResponseDTO> getAll(){
+    public List<BookTicketResponseDTO> getAll() {
         return bookTicketService.getAllUsers();
     }
+
+    @GetMapping("/ticket")
+    public List<BookTicketResponseDTO> getForRest() {
+        return bookTicketService.getInfoForRestTemp();
+    }
+
 }

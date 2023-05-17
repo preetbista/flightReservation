@@ -9,14 +9,18 @@ import com.flightreservation.resource.responsedto.UserResponseDTO;
 import com.flightreservation.service.UserService;
 import com.flightreservation.status.UserStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.core.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -25,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
+        log.info("Getting all the user information");
         return userRepository.findAll()
                 .stream()
                 .map(UserResponseDTO::of)
@@ -34,7 +39,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
-        return optionalUser.orElseThrow(() -> new UserNotFoundException("User not found for id :"+id));
+        log.info("Returning user by id");
+        return optionalUser.orElseThrow(() -> new UserNotFoundException("User not found for id :" + id));
     }
 
     @Override
@@ -43,12 +49,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) {
+    public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
 
-        /*String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);*/
-        user.setStatus(UserStatus.ACTIVE); // Set the status to "active"
-        return userRepository.save(user);
+        /*String encodedPassword = bCryptPasswordEncoder.encode(userRequestDTO.getPassword());
+        userRequestDTO.setPassword(encodedPassword);*/
+        User user = new User();
+        user.setUserName(userRequestDTO.getUserName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setAge(userRequestDTO.getAge());
+        user.setPassword(userRequestDTO.getPassword());
+        user.setStatus(UserStatus.ACTIVE);
+        user.setRoles(userRequestDTO.getRoles());
+
+        user = userRepository.save(user);
+        return UserResponseDTO.builder()
+                .userName(user.getUserName())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .build();
     }
 
     @Override
@@ -70,6 +88,22 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user); // Save the updated user with the new status
 
         return "User deleted successfully";
+    }
+
+    @Override
+    public List<String> getUsernameForRest() {
+        log.info("inside getUserNameForRest");
+        List<UserResponseDTO> userResponseDTOList =  userRepository.findAll()
+                .stream()
+                .map(UserResponseDTO::forRest)
+                .collect(Collectors.toList());
+        List<String> userNameList = new ArrayList<>();
+        for (UserResponseDTO userResponseDTO : userResponseDTOList) {
+            userNameList.add(userResponseDTO.getUserName());
+        }
+        log.info("List of username returning: "+userNameList);
+        return userNameList;
+
     }
 
 }

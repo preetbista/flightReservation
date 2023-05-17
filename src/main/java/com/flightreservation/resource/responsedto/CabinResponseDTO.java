@@ -19,9 +19,18 @@ public class CabinResponseDTO implements Serializable {
 
     private SeatStatus availability;
 
-    public static CabinResponseDTO of(Cabin cabin){
+    public CabinResponseDTO(String seatName) {
+        this.seatName = seatName;
+    }
+
+    public static CabinResponseDTO of(Cabin cabin) {
         return new CabinResponseDTO(cabin.getSeatName(),
                 cabin.getAvailability());
+    }
+
+    public static CabinResponseDTO forRest(Cabin cabin) {
+        return new CabinResponseDTO(cabin.getSeatName()
+        );
     }
 
 

@@ -1,7 +1,6 @@
 package com.flightreservation.controller;
 
 import com.flightreservation.exception.CabinAlreadyExistException;
-import com.flightreservation.model.Cabin;
 import com.flightreservation.resource.requestdto.CabinRequestDTO;
 import com.flightreservation.resource.responsedto.CabinResponseDTO;
 import com.flightreservation.service.CabinService;
@@ -32,8 +31,13 @@ public class CabinController {
     }
 
     @GetMapping
-    public List<CabinResponseDTO> getAll(){
+    public List<CabinResponseDTO> getAll() {
         return cabinService.getAllCabin();
+    }
+
+    @GetMapping("/cabin-rest")
+    public List<String> getCabinName() {
+        return cabinService.getCabinSeatName();
     }
 
 }

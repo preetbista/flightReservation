@@ -10,4 +10,6 @@ public interface BookTicketService {
     BookTicketResponseDTO addBookTicket(BookTicketRequestDTO bookTicketRequestDTO);
 
     List<BookTicketResponseDTO> getAllUsers();
+
+    List<BookTicketResponseDTO> getInfoForRestTemp();
 }

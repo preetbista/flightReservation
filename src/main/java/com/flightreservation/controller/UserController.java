@@ -2,13 +2,14 @@ package com.flightreservation.controller;
 
 import com.flightreservation.resource.UserUpdateDto;
 import com.flightreservation.model.User;
+import com.flightreservation.resource.requestdto.UserRequestDTO;
 import com.flightreservation.resource.responsedto.UserResponseDTO;
 import com.flightreservation.service.UserService;
-import com.flightreservation.status.UserStatus;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -37,9 +38,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        user.setStatus(UserStatus.ACTIVE);
-        User createdUser = userService.addUser(user);
+    public ResponseEntity<UserResponseDTO> addUser(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+        UserResponseDTO createdUser = userService.addUser(userRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
@@ -57,5 +57,10 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(result);
         }
+    }
+
+    @GetMapping("/user-rest")
+    public List<String> getUsernameRest() {
+        return userService.getUsernameForRest();
     }
 }

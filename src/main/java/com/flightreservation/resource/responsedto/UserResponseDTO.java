@@ -1,10 +1,7 @@
 package com.flightreservation.resource.responsedto;
 
 import com.flightreservation.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserResponseDTO implements Serializable {
 
     private String userName;
@@ -20,9 +18,18 @@ public class UserResponseDTO implements Serializable {
 
     private Long age;
 
-    public static UserResponseDTO of(User user){
+    public UserResponseDTO(String userName) {
+        this.userName = userName;
+    }
+
+    public static UserResponseDTO of(User user) {
         return new UserResponseDTO(user.getUserName(),
                 user.getEmail(),
                 user.getAge());
+    }
+
+    public static UserResponseDTO forRest(User user) {
+        return new UserResponseDTO(user.getUserName()
+        );
     }
 }

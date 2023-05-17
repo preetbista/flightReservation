@@ -28,14 +28,32 @@ public class BookTicketResponseDTO implements Serializable {
 
     private BookStatus bookStatus;
 
-    public static BookTicketResponseDTO of(BookTicket bookTicket){
+    public BookTicketResponseDTO(LocalDateTime travelDate, String departureAirport, String arrivalAirport, String departureTime, String arrivalTime) {
+        this.travelDate = travelDate;
+        this.departureAirport = departureAirport;
+        this.arrivalAirport = arrivalAirport;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+    }
+
+    public static BookTicketResponseDTO of(BookTicket bookTicket) {
         return new BookTicketResponseDTO(bookTicket.getTravelDate(),
                 bookTicket.getDepartureAirport(),
                 bookTicket.getArrivalAirport(),
                 bookTicket.getDepartureTime(),
                 bookTicket.getArrivalTime(),
                 bookTicket.getBookStatus()
-                );
+        );
+    }
+
+    public static BookTicketResponseDTO forRest(BookTicket bookTicket) {
+        return new BookTicketResponseDTO(
+                bookTicket.getTravelDate(),
+                bookTicket.getDepartureAirport(),
+                bookTicket.getArrivalAirport(),
+                bookTicket.getDepartureTime(),
+                bookTicket.getArrivalTime()
+        );
     }
 
 }
