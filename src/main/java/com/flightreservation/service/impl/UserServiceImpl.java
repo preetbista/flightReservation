@@ -10,7 +10,6 @@ import com.flightreservation.service.UserService;
 import com.flightreservation.status.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.core.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

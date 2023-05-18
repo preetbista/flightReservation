@@ -60,11 +60,13 @@ public class CabinServiceImpl implements CabinService {
         log.info("inside getCabinSeatName");
         List<CabinResponseDTO> cabinResponseDTO = cabinRepository.findAll()
                 .stream()
-                .map(CabinResponseDTO::forRest)
+                .map(CabinResponseDTO::of)
                 .collect(Collectors.toList());
         List<String> cabinList = new ArrayList<>();
         for (CabinResponseDTO responseDTO : cabinResponseDTO) {
-            cabinList.add(responseDTO.getSeatName());
+            if (responseDTO.getAvailability().equals(SeatStatus.BOOKED)) {
+                cabinList.add(responseDTO.getSeatName());
+            }
         }
         log.info("List of cabin returning: "+cabinList);
         return cabinList;
