@@ -10,6 +10,7 @@ import com.flightreservation.service.UserService;
 import com.flightreservation.status.UserStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    /*private final BCryptPasswordEncoder bCryptPasswordEncoder;*/
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
@@ -50,8 +51,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
 
-        /*String encodedPassword = bCryptPasswordEncoder.encode(userRequestDTO.getPassword());
-        userRequestDTO.setPassword(encodedPassword);*/
+        String encodedPassword = bCryptPasswordEncoder.encode(userRequestDTO.getPassword());
+        userRequestDTO.setPassword(encodedPassword);
         User user = new User();
         user.setUserName(userRequestDTO.getUserName());
         user.setEmail(userRequestDTO.getEmail());
