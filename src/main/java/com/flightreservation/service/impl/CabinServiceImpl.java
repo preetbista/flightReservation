@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +24,7 @@ public class CabinServiceImpl implements CabinService {
 
     @Override
     public List<CabinResponseDTO> addSeat(CabinRequestDTO cabinRequestDTO) throws CabinAlreadyExistException {
+        log.info("Service | Adding the cabin information");
         List<Cabin> cabinList = new ArrayList<>();
         for (int i = 1; i <= cabinRequestDTO.getMaxSeat(); i++) {
             String seatName = cabinRequestDTO.getSeatName() + i;
@@ -33,10 +33,11 @@ public class CabinServiceImpl implements CabinService {
             }
             cabinList.add(new Cabin(seatName, SeatStatus.AVAILABLE));
         }
-
         cabinList = cabinRepository.saveAll(cabinList);
+        log.info("Service | Added cabin information");
 
         List<CabinResponseDTO> cabinResponseDTOList = new ArrayList<>();
+        log.info("Service | Cabin information for response");
         for (Cabin cabin : cabinList) {
             CabinResponseDTO cabinResponseDTO = new CabinResponseDTO();
             cabinResponseDTO.setSeatName(cabin.getSeatName());
@@ -44,11 +45,13 @@ public class CabinServiceImpl implements CabinService {
 
             cabinResponseDTOList.add(cabinResponseDTO);
         }
+        log.info("Service | Displayed the cabin information response");
         return cabinResponseDTOList;
     }
 
     @Override
     public List<CabinResponseDTO> getAllCabin() {
+        log.info("Service | getting all cabin information");
         return cabinRepository.findAll()
                 .stream()
                 .map(CabinResponseDTO::of)

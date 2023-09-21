@@ -44,6 +44,8 @@ public class BookTicketServiceImpl implements BookTicketService {
 
             BookTicket bookTicket = new BookTicket();
             bookTicket.setCabin(cabin);
+            bookTicket.setName(bookTicketRequestDTO.getName());
+            bookTicket.setEmail(bookTicketRequestDTO.getEmail());
             bookTicket.setTravelDate(bookTicketRequestDTO.getTravelDate());
             bookTicket.setDepartureTime(bookTicketRequestDTO.getDepartureTime());
             bookTicket.setArrivalTime(bookTicketRequestDTO.getArrivalTime());
@@ -56,6 +58,8 @@ public class BookTicketServiceImpl implements BookTicketService {
             bookTicket = bookTicketRepository.save(bookTicket);
 
             return BookTicketResponseDTO.builder()
+                    .name(bookTicket.getName())
+                    .email(bookTicket.getEmail())
                     .arrivalAirport(bookTicket.getArrivalAirport())
                     .departureAirport(bookTicket.getDepartureAirport())
                     .travelDate(bookTicket.getTravelDate())

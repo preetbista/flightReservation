@@ -31,6 +31,7 @@ public class BookTicketController {
 
     @GetMapping("/ticket")
     public List<BookTicketResponseDTO> getForRest() {
+//        System.out.println("request fore getting ticket info");
         return bookTicketService.getInfoForRestTemp();
     }
 

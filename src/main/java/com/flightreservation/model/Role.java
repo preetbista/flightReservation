@@ -25,4 +25,6 @@ public class Role extends TimeStamp {
 
     @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
     private List<User> users;
+
+
 }

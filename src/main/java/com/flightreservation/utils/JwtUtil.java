@@ -4,11 +4,13 @@ import com.flightreservation.model.Role;
 import com.flightreservation.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 public class JwtUtil {
 
     public static String getJWTToken(User user){

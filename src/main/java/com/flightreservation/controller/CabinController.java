@@ -20,7 +20,7 @@ public class CabinController {
         this.cabinService = cabinService;
     }
 
-    @PostMapping
+    @PostMapping("/addCabin")
     public ResponseEntity<List<CabinResponseDTO>> addSeat(@RequestBody CabinRequestDTO cabinRequestDTO) {
         try {
             List<CabinResponseDTO> addedCabins = cabinService.addSeat(cabinRequestDTO);

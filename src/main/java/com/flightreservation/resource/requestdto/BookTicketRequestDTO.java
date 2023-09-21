@@ -18,6 +18,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookTicketRequestDTO implements Serializable {
 
+    private String name;
+
+    private String email;
+
     private LocalDateTime travelDate;
 
     private String departureAirport;

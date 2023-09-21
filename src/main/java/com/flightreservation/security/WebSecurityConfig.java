@@ -20,7 +20,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable().addFilterAfter(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeHttpRequests((authz) -> authz.anyRequest().authenticated()).httpBasic(Customizer.withDefaults());
+                .authorizeHttpRequests((authz) -> authz.antMatchers("/users").permitAll())
+                .httpBasic(Customizer.withDefaults());
         return http.build();
     }
     @Bean
@@ -43,5 +44,6 @@ public class WebSecurityConfig {
             }
         };
     }
+
 
 }

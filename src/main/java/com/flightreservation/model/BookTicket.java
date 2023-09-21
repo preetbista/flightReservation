@@ -1,9 +1,9 @@
 package com.flightreservation.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.flightreservation.status.BookStatus;
-import com.flightreservation.status.SeatStatus;
 import com.flightreservation.timestamp.TimeStamp;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +25,12 @@ public class BookTicket extends TimeStamp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "email")
+    private String email;
+
     @CreationTimestamp
     private LocalDateTime travelDate;
 
@@ -34,9 +40,11 @@ public class BookTicket extends TimeStamp {
     @Column(name = "arrival_airport")
     private String arrivalAirport;
 
+    @JsonIgnore
     @Column(name = "departure_time")
     private String departureTime;
 
+    @JsonIgnore
     @Column(name = "arrival_time")
     private String arrivalTime;
 

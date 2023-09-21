@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long id) {
+        log.info("finding user by id");
         Optional<User> optionalUser = userRepository.findById(id);
         log.info("Returning user by id");
         return optionalUser.orElseThrow(() -> new UserNotFoundException("User not found for id :" + id));
@@ -45,12 +46,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByUsername(String userName) {
+        log.info("finding user by username");
         return userRepository.findByUserName(userName);
     }
 
     @Override
     public UserResponseDTO addUser(UserRequestDTO userRequestDTO) {
-
+        log.info("adding user");
         String encodedPassword = bCryptPasswordEncoder.encode(userRequestDTO.getPassword());
         userRequestDTO.setPassword(encodedPassword);
         User user = new User();
@@ -61,7 +63,12 @@ public class UserServiceImpl implements UserService {
         user.setStatus(UserStatus.ACTIVE);
         user.setRoles(userRequestDTO.getRoles());
 
+        /*List<Role> roles = new ArrayList<>();
+          roles.add(new Role(null,"USER"));
+          user.setRoles(roles);*/
+
         user = userRepository.save(user);
+        log.info("service | user added successfully ");
         return UserResponseDTO.builder()
                 .userName(user.getUserName())
                 .age(user.getAge())
@@ -71,14 +78,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(UserUpdateDto userUpdateDto) {
+        log.info("updating user");
         User user = findById(userUpdateDto.getId());
         user.setUserName(userUpdateDto.getUserName());
         user.setAge(userUpdateDto.getAge());
+        log.info("user updated");
         return userRepository.save(user);
     }
 
     @Override
     public String deleteUser(Long id) {
+        log.info("deleting user");
         User user = findById(id);
         if (user == null) {
             return "User not found";
@@ -86,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
         user.setStatus(UserStatus.DELETED); // Update the status to "deleted"
         userRepository.save(user); // Save the updated user with the new status
-
+        log.info("user deleted successfully");
         return "User deleted successfully";
     }
 
